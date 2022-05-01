@@ -76,7 +76,7 @@ int main()
   // write mesh to output.obj
   try
   {
-    if ( !OpenMesh::IO::write_mesh(mesh, std::string(std::getenv("HNLL_MODEL_DIR")) + "/output.obj") )
+    if ( !OpenMesh::IO::write_mesh(mesh, std::string(std::getenv("HNLL_MODEL_DIR")) + "/cube.obj") )
     {
       std::cerr << "Cannot write mesh to file 'output.off'" << std::endl;
       return 1;
