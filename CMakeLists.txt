@@ -13,6 +13,7 @@ set(OPEN_MESH_INCLUDE_DIR $ENV{OPEN_MESH_DIR}/src/)
 
 target_include_directories(app PUBLIC
   ${OPEN_MESH_INCLUDE_DIR}
+  ./include
 )
 
 target_link_directories(app PUBLIC

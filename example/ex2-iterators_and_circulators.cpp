@@ -1,6 +1,9 @@
 #include <OpenMesh/Core/IO/MeshIO.hh>
 #include <OpenMesh/Core/Mesh/TriMesh_ArrayKernelT.hh>
 
+//lib
+#include <utility.hpp>
+
 // std
 #include <iostream>
 #include <vector>
@@ -11,7 +14,7 @@ using MyMesh = OpenMesh::TriMesh_ArrayKernelT<>;
 int main(int argc, char **argv)
 {
   MyMesh mesh;
-  if (!OpenMesh::IO::read_mesh(mesh, std::string(std::getenv("HNLL_MODEL_DIR")) + "/cube.obj"))
+  if (!OpenMesh::IO::read_mesh(mesh, std::string(std::getenv("HNLL_MODEL_DIR")) + "/" + argv[2]))
     std::cerr << "cannnot read mesh" << std::endl;
 
   // storage for the computed centers of gravity
@@ -40,15 +43,13 @@ int main(int argc, char **argv)
       }
       cogs.push_back(cog/valence);
     }
-    for (v_it = mesh.vertices_begin(), cog_it = cogs.begin();
-        v_it != v_end; ++v_it, ++cog_it) 
-    {
+    for (v_it = mesh.vertices_begin(), cog_it = cogs.begin(); v_it != v_end; ++v_it, ++cog_it) {
       if (!mesh.is_boundary(*v_it))
         mesh.set_point(*v_it, *cog_it);
     }
   }
 
   // write
-  if (!OpenMesh::IO::write_mesh(mesh, std::string(std::getenv("HNLL_MODEL_DIR")) + "/smoothed_cube.obj"))
+  if (!OpenMesh::IO::write_mesh(mesh, std::string(std::getenv("HNLL_MODEL_DIR")) + "/processed/" + getFileName(std::string(argv[2]))))
     std::cerr << "cannot write mesh" << std::endl;
 }
